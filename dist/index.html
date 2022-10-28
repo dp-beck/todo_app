@@ -5,14 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do App</title>
-<script defer src="index.bundle.js"></script><script defer src="todoFactory.bundle.js"></script><script defer src="projectFactory.bundle.js"></script><script defer src="domUpdater.bundle.js"></script></head>
+<script defer src="index.bundle.js"></script><script defer src="todoFactory.bundle.js"></script><script defer src="projectFactory.bundle.js"></script></head>
 <body>
     <header>
         <h1>To Do App</h1>
     </header>
     
-    <div class="project-window">
+    <div id="project-window">
         <h2>Projects</h2>
+        <ul id="projectBulletList"></ul>
         <button id="new-project">Display Project Adder Form</button>
         
         <div id="new-project-form">
@@ -22,7 +23,7 @@
 
     </div>
 
-    <div class="current-project-window">
+    <div id="current-project-window">
 
     </div>
 

@@ -5,8 +5,7 @@ module.exports = {
   mode: "development",  
   entry: {index: './src/index.js',
           todoFactory: './src/todoFactory.js',
-          projectFactory: './src/projectFactory.js',
-          domUpdater: './src/domUpdater.js' 
+          projectFactory: './src/projectFactory.js', 
         },
   devtool: 'inline-source-map',
   plugins: [
