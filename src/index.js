@@ -1,6 +1,4 @@
 //TO DO: 
-// 1.) See Small To Dos below
-// 2.) Add Delete button for Projects
 // 3.) CLEAN UP THIS CODE AND PUT IT INTO MODULES
 // 4.) Style
 
@@ -11,6 +9,7 @@ import createProject from './projectFactory.js';
 //consts for certain divs
 const currentProjectWindow = document.getElementById("current-project-window");
 const projectBulletList = document.getElementById("projectBulletList");
+const projectList = document.getElementById("projectList");
 
 //code for default project creation
 const projectArray = [];
@@ -44,17 +43,21 @@ document.getElementById("project-button").addEventListener("click", function () 
     domUpdater();
 });
 
+//run domUpdater once at start
+domUpdater();
+
 //FUNCTION THAT RUNS TO UPDATE DOM
 function domUpdater() {
     //code to populate project selection
+    while (projectList.firstChild) {
+        projectList.removeChild(projectList.firstChild);
+    };
     projectArray.forEach(element => {
-        if (document.getElementById(element.name) == null) {
-            let option = document.createElement("option");
-            option.setAttribute("value", element.name);
-            option.setAttribute("id", element.name);
-            option.textContent = element.name;
-            document.getElementById("projectList").appendChild(option);
-        };
+        let option = document.createElement("option");
+        option.setAttribute("value", element.name);
+        option.setAttribute("id", element.name);
+        option.textContent = element.name;
+        document.getElementById("projectList").appendChild(option);
     });
 
     //code to display toDos of currentlySelected list
@@ -77,20 +80,32 @@ function domUpdater() {
         todoDiv.appendChild(description);
         todoDiv.appendChild(dueDate);
 
-        //complete button code -- TO DO: MAKE REVERSIBLE
+        //complete button code 
         let completeButton = document.createElement("button");
-        completeButton.innerText = "Complete";
+        completeButton.innerText = "Mark Completed";
         todoDiv.appendChild(completeButton);
         completeButton.addEventListener("click", function(){
-            todoDiv.setAttribute("class", "completed");
+            if (completeButton.innerText == "Mark Completed") {
+                todoDiv.classList.add("completed");
+                completeButton.innerText = "Mark Uncompleted";
+            } else {
+                completeButton.innerText = "Mark Completed";
+                todoDiv.classList.remove("completed");
+                if (element.priority == "Yes") {
+                    todoDiv.classList.add("priority");
+                } else {
+                    todoDiv.classList.add("not-priority");
+                };
+            };
         });
 
-        //delete button code -- TO DO: FINISH
+        //delete button code
         let deleteButton = document.createElement("button");
         deleteButton.innerText = "Delete";
         todoDiv.appendChild(deleteButton);
         deleteButton.addEventListener("click", function(){
-            console.log("IN PROGRESS");
+            currentlySelectedProject.deleteTodo(element);
+            domUpdater();
         })
 
         //changes styling depending on priority
@@ -113,6 +128,15 @@ function domUpdater() {
             currentlySelectedProject = projectArray.find(e => this.innerText == e.name);
             domUpdater();
             });
+        
+        //prject deleter button
+        let projectDeleteButton = document.createElement("button");
+        projectDeleteButton.innerText = "Delete";
+        projectBulletList.appendChild(projectDeleteButton);
+        projectDeleteButton.addEventListener("click", function(){
+            projectArray.splice(projectArray.indexOf(element), 1);
+            domUpdater();
+        });
     });
 
 }
