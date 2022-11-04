@@ -1,23 +1,32 @@
 //TO DO: 
-// 3.) CLEAN UP THIS CODE AND PUT IT INTO MODULES
 // 4.) Style
 
 import "./style.css";
 import createTodoItem from "./todoFactory.js";
 import createProject from './projectFactory.js';
+import populateStorage from './populateStorage.js';
 
 //consts for certain divs
 const currentProjectWindow = document.getElementById("current-project-window");
 const projectBulletList = document.getElementById("projectBulletList");
 const projectList = document.getElementById("projectList");
 
-//code for default project creation
+//code for projectArray
 const projectArray = [];
-const defaultProject = createProject("default");
-projectArray.push(defaultProject);
 
+//load local storage
+if(window.localStorage.length !== 1) {
+    const keys = Object.keys(window.localStorage);
+    for (let key of keys ) {
+        projectArray.push(JSON.parse(window.localStorage.getItem(key)))
+    };
+  } else {
+    const defaultProject = createProject("default");
+    projectArray.push(defaultProject);
+  };
+  
 //code for tracking currently selected project
-let currentlySelectedProject = defaultProject;
+let currentlySelectedProject = projectArray[0];
 const currentProjectName = document.createElement("h2");
 currentProjectName.textContent = currentlySelectedProject.name;
 document.getElementById("current-project-name").appendChild(currentProjectName);
@@ -34,6 +43,7 @@ document.getElementById("todo-button").addEventListener("click", function () {
     const toDo = createTodoItem(...todoInput);
     eval(projectArray.find(e => e.name == document.getElementById("projectList").value)).addTodo(toDo);
     domUpdater();
+    populateStorage(projectArray);
 });
 
 //code for the project adder form
@@ -41,6 +51,7 @@ document.getElementById("project-button").addEventListener("click", function () 
     const newProject = createProject(document.getElementById("projectName").value);
     projectArray.push(newProject);
     domUpdater();
+    populateStorage(projectArray);
 });
 
 //run domUpdater once at start
@@ -106,6 +117,7 @@ function domUpdater() {
         deleteButton.addEventListener("click", function(){
             currentlySelectedProject.deleteTodo(element);
             domUpdater();
+            populateStorage(projectArray);
         })
 
         //changes styling depending on priority
@@ -136,6 +148,7 @@ function domUpdater() {
         projectDeleteButton.addEventListener("click", function(){
             projectArray.splice(projectArray.indexOf(element), 1);
             domUpdater();
+            populateStorage(projectArray);
         });
     });
 

@@ -6,6 +6,7 @@ module.exports = {
   entry: {index: './src/index.js',
           todoFactory: './src/todoFactory.js',
           projectFactory: './src/projectFactory.js', 
+          populateStorage: './src/populateStorage.js',
         },
   devtool: 'inline-source-map',
   plugins: [
