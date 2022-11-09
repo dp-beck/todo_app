@@ -1,15 +1,22 @@
 //a factory function for creating projects
-export default function createProject(name) {
-    const list = [];
-    const addTodo = (e) => {
-        list.push(e);
-    };
-    const deleteTodo = (e) => {
-        if (list.indexOf(e) === -1) {console.log("ERROR");
+const projectActions = {
+    addTodo(e) {
+        this.list.push(e);
+    },
+    deleteTodo(e) {
+        if (this.list.indexOf(e) === -1) {console.log("ERROR");
         }
         else {
-            list.splice(list.indexOf(e), 1);
+            this.list.splice(this.list.indexOf(e), 1);
         };
-    };
-    return {name, list, addTodo, deleteTodo}
+    }
 };
+
+function createProject(name) {
+    let project = Object.create(projectActions);
+    project.list = [];
+    project.name = name;    
+    return project;
+}
+
+export { projectActions, createProject };

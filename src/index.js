@@ -3,7 +3,7 @@
 
 import "./style.css";
 import createTodoItem from "./todoFactory.js";
-import createProject from './projectFactory.js';
+import { projectActions, createProject } from './projectFactory.js';
 import populateStorage from './populateStorage.js';
 
 //consts for certain divs
@@ -15,10 +15,15 @@ const projectList = document.getElementById("projectList");
 const projectArray = [];
 
 //load local storage
-if(window.localStorage.length !== 1) {
+if(window.localStorage.length !== 0) {
     const keys = Object.keys(window.localStorage);
     for (let key of keys ) {
-        projectArray.push(JSON.parse(window.localStorage.getItem(key)))
+        //take the data in local storage and use it to create a new project with those todos
+        const object = JSON.parse(window.localStorage.getItem(key));
+        //add the projectFactory functionality to the object
+        object.addTodo = projectActions.addTodo;
+        object.deleteTodo = projectActions.deleteTodo;
+        projectArray.push(object);
     };
   } else {
     const defaultProject = createProject("default");
@@ -112,7 +117,7 @@ function domUpdater() {
 
         //delete button code
         let deleteButton = document.createElement("button");
-        deleteButton.innerText = "Delete";
+        deleteButton.innerText = "X";
         todoDiv.appendChild(deleteButton);
         deleteButton.addEventListener("click", function(){
             currentlySelectedProject.deleteTodo(element);
@@ -137,14 +142,14 @@ function domUpdater() {
         projectNameBulletPoint.textContent = element.name;
         projectBulletList.appendChild(projectNameBulletPoint);
         projectNameBulletPoint.addEventListener("click", function(){
-            currentlySelectedProject = projectArray.find(e => this.innerText == e.name);
+            currentlySelectedProject = projectArray.find(e => this.innerText == e.name + "X");
             domUpdater();
-            });
-        
+        });
+
         //prject deleter button
         let projectDeleteButton = document.createElement("button");
-        projectDeleteButton.innerText = "Delete";
-        projectBulletList.appendChild(projectDeleteButton);
+        projectDeleteButton.innerText = "X";
+        projectNameBulletPoint.appendChild(projectDeleteButton);
         projectDeleteButton.addEventListener("click", function(){
             projectArray.splice(projectArray.indexOf(element), 1);
             domUpdater();
