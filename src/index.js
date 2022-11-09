@@ -49,6 +49,7 @@ document.getElementById("todo-button").addEventListener("click", function () {
     eval(projectArray.find(e => e.name == document.getElementById("projectList").value)).addTodo(toDo);
     domUpdater();
     populateStorage(projectArray);
+    document.getElementById("todo-form").setAttribute("class", "hidden")
 });
 
 //code for the project adder form
@@ -57,6 +58,11 @@ document.getElementById("project-button").addEventListener("click", function () 
     projectArray.push(newProject);
     domUpdater();
     populateStorage(projectArray);
+});
+
+//code for display to do adder form
+document.getElementById("new-to-do").addEventListener("click", function() {
+    document.getElementById("todo-form").setAttribute("class", "visible");
 });
 
 //run domUpdater once at start

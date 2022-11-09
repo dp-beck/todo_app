@@ -141,6 +141,28 @@ footer {
     align-self: center;
 }
 
+#new-to-do {
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px grey;
+    background-color: lightsalmon;
+    border: none;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+}
+
+#todo-form {
+    position: fixed;
+    border: solid black 1px;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    width: 500px;
+    height: 300px;
+    background-color: white;
+}
 .priority {
     color: red;
 }
@@ -157,4 +179,12 @@ footer {
 
 footer {
     border-top: solid black 1px;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }
