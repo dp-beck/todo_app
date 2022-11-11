@@ -1,6 +1,3 @@
-//TO DO: 
-// 4.) Style
-
 import "./style.css";
 import createTodoItem from "./todoFactory.js";
 import { projectActions, createProject } from './projectFactory.js';
@@ -63,6 +60,11 @@ document.getElementById("project-button").addEventListener("click", function () 
 //code for display to do adder form
 document.getElementById("new-to-do").addEventListener("click", function() {
     document.getElementById("todo-form").setAttribute("class", "visible");
+});
+
+//code for closing the to do adder form
+document.getElementById("close-button").addEventListener("click", function() {
+    document.getElementById("todo-form").setAttribute("class", "hidden");
 });
 
 //run domUpdater once at start
@@ -144,15 +146,17 @@ function domUpdater() {
     };
     projectArray.forEach(element => {
         let projectNameBulletPoint = document.createElement("li");    
-        projectNameBulletPoint.setAttribute("id", element.name + "bullet");
-        projectNameBulletPoint.textContent = element.name;
+        let projectNameBulletPointDiv = document.createElement("div");
+        projectNameBulletPointDiv.setAttribute("id", element.name + "bullet");
+        projectNameBulletPointDiv.textContent = element.name;
         projectBulletList.appendChild(projectNameBulletPoint);
-        projectNameBulletPoint.addEventListener("click", function(){
-            currentlySelectedProject = projectArray.find(e => this.innerText == e.name + "X");
+        projectNameBulletPoint.appendChild(projectNameBulletPointDiv);
+        projectNameBulletPointDiv.addEventListener("click", function(){
+            currentlySelectedProject = projectArray.find(e => this.innerText == e.name);
             domUpdater();
         });
 
-        //prject deleter button
+        //project deleter button
         let projectDeleteButton = document.createElement("button");
         projectDeleteButton.innerText = "X";
         projectNameBulletPoint.appendChild(projectDeleteButton);

@@ -2,7 +2,7 @@ body {
     display: grid;
     margin: 0;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 0.5fr minmax(min-content, 4fr) auto;
+    grid-template-rows: 1fr 0.5fr minmax(min-content, 5.5fr) 0.5fr;
     font-family: system-ui;
 }
 
@@ -50,6 +50,7 @@ label {
     background-color: darkorange;
     color: black;
     font-weight: bolder;
+    display: flex;
 }
 
 #projectBulletList > li > button {
@@ -154,15 +155,21 @@ footer {
 }
 
 #todo-form {
-    position: fixed;
     border: solid black 1px;
     position: absolute;
-    top: 50%;
-    right: 50%;
+    top: 45%;
+    right: 7%;
     width: 500px;
     height: 300px;
     background-color: white;
+    flex-direction: column;
 }
+
+#todo-form > div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .priority {
     color: red;
 }
@@ -179,6 +186,7 @@ footer {
 
 footer {
     border-top: solid black 1px;
+    background-color: #4287f5;
 }
 
 .hidden {
@@ -186,5 +194,9 @@ footer {
 }
 
 .visible {
-    display: block;
+    display: flex;
+}
+
+footer > h3 {
+    text-align: center;
 }
